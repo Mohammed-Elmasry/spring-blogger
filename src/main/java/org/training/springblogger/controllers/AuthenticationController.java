@@ -1,22 +1,23 @@
 package org.training.springblogger.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
+import jakarta.validation.Valid;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.training.springblogger.entities.User;
 import org.training.springblogger.requests.UserRegistrationRequest;
 
 @RestController
 public class AuthenticationController {
 
     @PostMapping("/register")
-    public String register(@RequestBody UserRegistrationRequest user) {
-        return "";
-    }
+    public ResponseEntity<UserRegistrationRequest> register(@Valid @RequestBody UserRegistrationRequest user, BindingResult result) {
+        if (result.hasErrors()) {
+            result.getAllErrors().forEach(error -> System.out.println(error.getDefaultMessage()));
+            return ResponseEntity.unprocessableEntity().build();
+        }
 
-    @GetMapping("/login")
-    public String login() {
-        return "Hello from Login";
+        return ResponseEntity.ok().body(user);
     }
 }

@@ -7,10 +7,10 @@ import org.training.springblogger.validationConstraints.validatorClasses.FieldMa
 import java.lang.annotation.*;
 
 @Documented
-@Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
+@Target({ElementType.TYPE, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = FieldMatchValidator.class)
-public @interface FieldMatcher {
+public @interface MatchField {
 
     String message() default "Fields must match";
 
@@ -25,7 +25,8 @@ public @interface FieldMatcher {
     @Target({ElementType.FIELD, ElementType.ANNOTATION_TYPE})
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
+
     @interface List {
-        FieldMatcher[] value();
+        MatchField[] value();
     }
 }
